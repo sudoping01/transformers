@@ -185,6 +185,7 @@ LANGUAGES = {
     "jw": "javanese",
     "su": "sundanese",
     "yue": "cantonese",
+     "wo": "wolof"
 }
 
 # language code lookup by name, with a few language aliases
@@ -403,10 +404,10 @@ class WhisperTokenizer(PreTrainedTokenizer):
 
     @property
     def prefix_tokens(self) -> List[int]:
-        bos_token_id = self.convert_tokens_to_ids("<|startoftranscript|>")
-        translate_token_id = self.convert_tokens_to_ids("<|translate|>")
-        transcribe_token_id = self.convert_tokens_to_ids("<|transcribe|>")
-        notimestamps_token_id = self.convert_tokens_to_ids("<|notimestamps|>")
+        bos_token_id = self.convert_tokens_to_ids("")
+        translate_token_id = self.convert_tokens_to_ids("")
+        transcribe_token_id = self.convert_tokens_to_ids("")
+        notimestamps_token_id = self.convert_tokens_to_ids("")
         langs = tuple(LANGUAGES.keys())
 
         if self.language is not None:
@@ -417,10 +418,7 @@ class WhisperTokenizer(PreTrainedTokenizer):
                 language_id = self.language
             else:
                 is_language_code = len(self.language) == 2
-                raise ValueError(
-                    f"Unsupported language: {self.language}. Language should be one of:"
-                    f" {list(TO_LANGUAGE_CODE.values()) if is_language_code else list(TO_LANGUAGE_CODE.keys())}."
-                )
+                raise ValueError(f"Unsupported language: {self.language}. Language should be one of: {list(TO_LANGUAGE_CODE.values()) if is_language_code else list(TO_LANGUAGE_CODE.keys())}.")
 
         if self.task is not None:
             if self.task not in TASK_IDS:
